@@ -14,12 +14,17 @@ import { BrowserRouter as Router } from "react-router-dom";
 // React-Helmet
 import { HelmetProvider } from "react-helmet-async";
 
+// snack bar provider
+import { SnackbarProvider } from "notistack";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <HelmetProvider>
       <Router>
-        <App />
+        <SnackbarProvider autoHideDuration={5000}>
+          <App />
+        </SnackbarProvider>
       </Router>
     </HelmetProvider>
   </React.StrictMode>

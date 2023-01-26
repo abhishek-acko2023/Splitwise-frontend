@@ -2,13 +2,16 @@
 import { Stack } from "@mui/material";
 
 // MUI-joy
-import { Typography, Divider, Card, Alert } from "@mui/joy";
+import { Typography, Divider, Card, Alert, IconButton } from "@mui/joy";
 
 // MUI-joy Css
 import { CssVarsProvider } from "@mui/joy/styles";
 
-// Components
+// Icons
+import TerminalIcon from "@mui/icons-material/Terminal";
+import CopyIcon from "@mui/icons-material/ContentCopy";
 
+// Components
 const Heading = ({ text }) => {
   return <Typography level="h2">{text}</Typography>;
 };
@@ -59,6 +62,30 @@ const Technology = ({ type, imgURL, name }) => {
     </Card>
   );
 };
+
+const Code = ({ text }) => {
+  const handleClick = () => {
+    navigator.clipboard.writeText(text);
+  };
+  return (
+    <Alert
+      variant="soft"
+      size="sm"
+      startDecorator={<TerminalIcon />}
+      endDecorator={
+        <IconButton onClick={handleClick}>
+          <CopyIcon />
+        </IconButton>
+      }
+      sx={{ maxWidth: 800 }}
+    >
+      <Typography level="body3">
+        <code>{text}</code>
+      </Typography>
+    </Alert>
+  );
+};
+
 const Home = () => {
   return (
     <CssVarsProvider>
@@ -114,6 +141,28 @@ const Home = () => {
         </Stack>
         <Divider />
         <Heading text="Setup & Installation" />
+        <Stack spacing={1}>
+          <Body text="Frontend" />
+          <Code text="git clone https://github.com/abhishek-acko2023/Splitwise-frontend.git" />
+          <Code text="cd splitwise-frontend" />
+          <Code text="npm install" />
+          <Code text="npm start" />
+          <Typography level="body2">go to http://localhost:3000</Typography>
+          <Divider />
+          <Body text="Backend" />
+          <Code text="git clone https://github.com/abhishek-acko2023/Splitwise.git" />
+          <Code text="cd splitwise" />
+          <Code text="ctrl + R (run the backend)" />
+          <Typography level="body2">
+            Remeber to create a database named <code>Splitwise</code>
+          </Typography>
+        </Stack>
+        <Divider />
+        <Heading text="Contributors" />
+        <Stack spacing={1}>
+          <Typography>Abhishek Singh</Typography>
+          <Typography> Anupam Jha</Typography>
+        </Stack>
       </Stack>
     </CssVarsProvider>
   );
