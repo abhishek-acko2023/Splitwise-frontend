@@ -1,14 +1,15 @@
 {
   "files": {
-    "main.css": "/Splitwise-frontend/static/css/main.31d6cfe0.css",
-    "main.js": "/Splitwise-frontend/static/js/main.69366212.js",
+    "main.css": "/Splitwise-frontend/static/css/main.ed15f604.css",
+    "main.js": "/Splitwise-frontend/static/js/main.187623ac.js",
     "static/js/787.42490336.chunk.js": "/Splitwise-frontend/static/js/787.42490336.chunk.js",
     "index.html": "/Splitwise-frontend/index.html",
-    "main.69366212.js.map": "/Splitwise-frontend/static/js/main.69366212.js.map",
+    "main.ed15f604.css.map": "/Splitwise-frontend/static/css/main.ed15f604.css.map",
+    "main.187623ac.js.map": "/Splitwise-frontend/static/js/main.187623ac.js.map",
     "787.42490336.chunk.js.map": "/Splitwise-frontend/static/js/787.42490336.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.31d6cfe0.css",
-    "static/js/main.69366212.js"
+    "static/css/main.ed15f604.css",
+    "static/js/main.187623ac.js"
   ]
 }
