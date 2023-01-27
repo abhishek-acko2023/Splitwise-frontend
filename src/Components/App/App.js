@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Home from "../Home/Home";
 import User from "../User/User";
+import Group from "../Group/Group";
 
 // Driver App
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="/user" exact element={<User />} />
+        <Route path="/group" exact element={<Group />} />
       </Routes>
     </div>
   );

@@ -17,7 +17,8 @@ import { CssVarsProvider } from "@mui/joy/styles";
 // Snackbar
 import { useSnackbar } from "notistack";
 
-// MUI Icons
+// Icons
+import GroupIcon from "@mui/icons-material/Groups";
 import UserIcon from "@mui/icons-material/Person";
 import UserMail from "@mui/icons-material/Mail";
 
@@ -26,42 +27,51 @@ const Heading = ({ text }) => {
   return <Typography level="h2">{text}</Typography>;
 };
 
-const User = () => {
+const Group = () => {
   // States
-  const [user, setUser] = useState({
-    userName: "",
-    userEmail: "",
+  const [group, setGroup] = useState({
+    groupName: "",
+    groupMembers: [],
+    groupCreatedBy: "",
   });
 
-  const [addUserLoading, setAddUserLoading] = useState(false);
+  const [addGroupLoading, setAddGroupLoading] = useState(false);
   const [usersLoading, setUsersLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [users, setUsers] = useState([]);
   const [userDetails, setUserDetails] = useState({});
 
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setGroup({ ...group, [e.target.name]: e.target.value });
   };
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleAddUser = () => {
-    setAddUserLoading(true);
+  const handleAddGroup = () => {
+    setAddGroupLoading(true);
     axios
-      .post("/user/add", user)
+      .post("/group/create", {
+        ...group,
+        groupMembers: group.groupMembers
+          .trim()
+          .split(" ")
+          .map((num) => {
+            return parseInt(num);
+          }),
+      })
       .then(async (res) => {
         console.log(res);
         if (res.data.statusCode === 201)
-          enqueueSnackbar("User Already Exists!", { variant: "info" });
+          enqueueSnackbar("Group Already Exists!", { variant: "info" });
         if (res.data.statusCode === 200)
-          enqueueSnackbar("User Added!", { variant: "success" });
-        await handleAllUsers();
-        setAddUserLoading(false);
+          enqueueSnackbar("Group Added!", { variant: "success" });
+        // await handleAllUsers();
+        setAddGroupLoading(false);
       })
       .catch((err) => {
         console.log(err);
         enqueueSnackbar("Some Error Occured", { variant: "error" });
-        setAddUserLoading(false);
+        setAddGroupLoading(false);
       });
   };
 
@@ -104,29 +114,34 @@ const User = () => {
   return (
     <CssVarsProvider>
       <Stack spacing={3} sx={{ padding: "15px 24px" }}>
-        <Heading text="Add User & Get User Details" />
-        <Divider />
+        <Heading text="Add Group & Group Details" />
         <Stack direction="row" spacing={2}>
           <Card sx={{ width: 400 }} variant="outlined">
             <Stack spacing={1}>
               <Input
-                placeholder="Name"
-                name="userName"
-                value={user.userName}
+                placeholder="Group Name"
+                name="groupName"
+                value={group.groupName}
                 onChange={handleChange}
               />
               <Input
-                placeholder="Email"
-                name="userEmail"
-                value={user.userEmail}
+                placeholder="Group Creator"
+                name="groupCreatedBy"
+                value={group.groupCreatedBy}
+                onChange={handleChange}
+              />
+              <Input
+                placeholder="Group Members"
+                name="groupMembers"
+                value={group.groupMembers}
                 onChange={handleChange}
               />
               <Button
                 variant="soft"
-                onClick={handleAddUser}
-                loading={addUserLoading}
+                onClick={handleAddGroup}
+                loading={addGroupLoading}
               >
-                Add User
+                Add Group
               </Button>
             </Stack>
           </Card>
@@ -164,41 +179,9 @@ const User = () => {
             </Stack>
           </Card>
         </Stack>
-        <Divider />
-        <Heading text="All Users" />
-        <Grid container spacing={1}>
-          {!usersLoading ? (
-            users.map((user) => (
-              <Grid item lg={3} md={2} sm={4} xs={6} key={user.userEmail}>
-                <Card sx={{ width: 320 }} variant="outlined">
-                  <Stack spacing={1}>
-                    <Alert
-                      startDecorator={<UserIcon />}
-                      variant="soft"
-                      color="info"
-                      size="sm"
-                    >
-                      {user.userName}
-                    </Alert>
-                    <Alert
-                      startDecorator={<UserMail />}
-                      variant="soft"
-                      color="info"
-                      size="sm"
-                    >
-                      {user.userEmail}
-                    </Alert>
-                  </Stack>
-                </Card>
-              </Grid>
-            ))
-          ) : (
-            <CircularProgress variant="soft" />
-          )}
-        </Grid>
       </Stack>
     </CssVarsProvider>
   );
 };
 
-export default User;
+export default Group;
